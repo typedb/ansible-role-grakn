@@ -1,5 +1,7 @@
 # grakn
 
+[![Build Status](https://travis-ci.org/graknlabs/ansible-role-grakn.svg?branch=master)](https://travis-ci.org/graknlabs/ansible-role-grakn)
+
 Installs and configures [GRAKN.AI](https://github.com/graknlabs/grakn) on Ubuntu servers.
 
 ## Requirements
