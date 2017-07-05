@@ -1,4 +1,6 @@
 #!/bin/bash
+# This script automatically configures Grakn running on Google Cloud Platform VMs from the metadata variables.
+
 CONFDIR="/opt/grakn/cluster/grakn-engine/conf/main/"
 CASSANDRA_IP=$(curl -f -s 169.254.169.254/computeMetadata/v1beta1/project/attributes/cassandra_grakn)
 KAFKA_IP=$(curl -f -s 169.254.169.254/computeMetadata/v1beta1/project/attributes/kafka_grakn)

@@ -12,7 +12,7 @@
       src: configure-gcp.sh
       dest: "{{ cluster_home }}/grakn-engine/bin/configure.sh"
       mode: 0755
-    when: ansible_system_vendor == "Google"
+    when: ansible_system_vendor == "Google" and gcp_autoconfigure == true
 
   tags:
     - "role:grakn-engine"

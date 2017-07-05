@@ -45,3 +45,6 @@ grakn_analytics_spark_cores_max: "6"
 # Grakn JVM settings
 grakn_engine_extra_options: "-Xmx12g -XX:+HeapDumpOnOutOfMemoryError"
 grakn_java_options: ""
+
+# Google Cloud Platform
+gcp_autoconfigure: false
