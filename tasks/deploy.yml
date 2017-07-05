@@ -1,0 +1,151 @@
+---
+- name: Setup group
+  group:
+    name: "{{group_name}}"
+    system: "yes"
+
+- name: Setup user
+  user:
+    name: "{{user_name}}"
+    system: "yes"
+    group: "{{group_name}}"
+    createhome: "no"
+
+- name: Create cluster home and log directory
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: "{{user_name}}"
+    group: "{{group_name}}"
+    mode: 755
+  with_items:
+       - "{{cluster_home}}"
+       - "{{log_home}}"
+
+- name: Check Grakn service exists
+  stat:
+    path: /etc/systemd/system/grakn-engine.service
+  register: grakn_engine_service
+
+- name: Stop old Grakn
+  service:
+    name: grakn-engine
+    state: stopped
+  when: redeploy == true and grakn_engine_service.stat.exists == true
+
+- name: Delete old Grakn
+  file:
+    path: "{{cluster_home}}/grakn-engine"
+    state: absent
+  when: redeploy == true
+
+- name: Grakn version
+  debug:
+    msg: "Deploying Grakn {{ grakn_engine_version }}"
+
+- name: Download Grakn
+  get_url:
+    url: "{{ grakn_download_url }}"
+    dest: /tmp/
+  when: upload_release == false
+
+- name: Upload new Grakn
+  copy:
+    src: "{{ grakn_engine_package_directory }}/{{ grakn_engine_package }}"
+    dest: "/tmp/"
+  when: upload_release == true
+
+- name: Unpack Grakn
+  unarchive:
+    src: "/tmp/{{ grakn_engine_package }}"
+    dest: "/tmp/"
+    copy: no
+    creates: "{{ cluster_home }}/grakn-engine/"
+
+- name: Rename directory
+  command: "mv /tmp/{{ grakn_engine_dist }} {{ cluster_home }}/grakn-engine"
+  args:
+    creates: "{{ cluster_home }}/grakn-engine/"
+
+- block:
+  - set_fact:
+      storage_hostname: "{% for host in cassandra_hosts %}{{host}}{% if not loop.last %},{% endif %}{% endfor %}"
+    when: cassandra_hosts is defined
+
+  - name: Configure grakn.properties
+    template:
+      src: "{{ item }}"
+      dest: "{{ cluster_home }}/grakn-engine/conf/main/grakn.properties"
+      owner: "{{user_name}}"
+      group: "{{group_name}}"
+    with_first_found:
+      - "{{ grakn_engine_version }}/grakn.properties.j2"
+      - "grakn.properties.j2"
+    notify: restart grakn-engine
+
+  - name: Configure logback.xml
+    template:
+      src: "{{ item }}"
+      dest: "{{ cluster_home }}/grakn-engine/conf/main/logback.xml"
+      owner: "{{user_name}}"
+      group: "{{group_name}}"
+    with_first_found:
+      - files:
+        - "{{ playbook_dir }}/templates/logback.xml.j2"
+        - "{{ grakn_engine_version | regex_replace('-SNAPSHOT') }}/logback.xml.j2"
+        skip: true
+    when: custom_logback == true
+    notify: restart grakn-engine
+
+  - name: Configure grakn-engine.sh startup script
+    template:
+      src: "grakn-engine.sh.j2"
+      dest: "{{ cluster_home }}/grakn-engine/bin/grakn-engine.sh"
+      owner: "{{user_name}}"
+      group: "{{group_name}}"
+    notify: restart grakn-engine
+
+  - name: systemd service
+    template:
+      src: "{{ item }}"
+      dest: /lib/systemd/system/grakn-engine.service
+      owner: "{{user_name}}"
+      group: "{{group_name}}"
+    register: systemd_engine_config
+    notify: restart grakn-engine
+    with_first_found:
+      - "{{ grakn_engine_version }}/grakn-engine.service.j2"
+      - "grakn-engine.service.j2"
+
+  - name: environment file
+    template:
+      src: "{{ item }}"
+      dest: /etc/default/grakn-engine
+      owner: "{{user_name}}"
+      group: "{{group_name}}"
+    notify: restart grakn-engine
+    with_first_found:
+      - "{{ grakn_engine_version }}/default-grakn-environmentfile"
+      - "default-grakn-environmentfile"
+
+  - name: Reload systemd
+    command: systemctl daemon-reload
+    when: systemd_engine_config.changed
+  tags:
+    - configure_engine
+    - configure
+
+- name: Ensure ownership
+  file:
+    path: "{{item}}"
+    owner: "{{user_name}}"
+    group: "{{group_name}}"
+    recurse: yes
+  with_items:
+    - "{{cluster_home}}/grakn-engine/"
+
+- name: Start Grakn
+  service:
+    name: grakn-engine
+    state: "{{ grakn_engine_service_state }}"
+    enabled: yes

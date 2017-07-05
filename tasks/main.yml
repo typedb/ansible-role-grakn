@@ -1,0 +1,20 @@
+---
+- block:
+
+  - name: Google Cloud Platform variables
+    include_vars: gcp.yml
+    when: ansible_system_vendor == "Google"
+
+  - include: deploy.yml
+
+  - name: Google Cloud Platform config script 
+    copy:
+      src: configure-gcp.sh
+      dest: "{{ cluster_home }}/grakn-engine/bin/configure.sh"
+      mode: 0755
+    when: ansible_system_vendor == "Google"
+
+  tags:
+    - "role:grakn-engine"
+    - "role:grakn"
+    - "role:engine"

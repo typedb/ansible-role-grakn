@@ -1,0 +1,17 @@
+---
+- hosts: all
+
+  vars:
+    grakn_engine_service_state: "stopped"
+    upload_release: true
+    grakn_engine_version: "0.14.0-SNAPSHOT"
+    grakn_engine_package_directory: "/etc/ansible/roles/role_under_test/tests/test_package_directory/"
+    #grakn_download_url: "https://jenkins.grakn.ai/job/unit-test-pull-request-grakn-titan/3854/artifact/grakn-dist/target/grakn-dist-0.13.0-SNAPSHOT.tar.gz"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role_under_test

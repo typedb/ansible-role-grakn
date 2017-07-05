@@ -1,0 +1,47 @@
+---
+# Grakn deployment
+grakn_engine_version: "0.14.0"
+grakn_engine_dist: "grakn-dist-{{ grakn_engine_version }}"
+grakn_engine_archive_format: "tar.gz"
+grakn_engine_package: "{{ grakn_engine_dist }}.{{ grakn_engine_archive_format }}"
+
+redeploy: false
+upload_release: false
+grakn_engine_package_directory: "files/"
+grakn_download_url: "https://github.com/graknlabs/grakn/releases/download/v{{ grakn_engine_version }}/{{ grakn_engine_package }}"
+
+grakn_engine_service_state: "started"
+custom_logback: false
+
+cluster_home: /opt/grakn/cluster/
+log_home: /var/log/grakn/
+user_name: grakn
+group_name: grakn
+
+# Grakn properties
+grakn_graph_sharding_threshold: "100000"
+grakn_graph_ontology_cache_timeout_ms: "120000"
+grakn_engine_taskmanager_implementation: "ai.grakn.engine.tasks.manager.singlequeue.SingleQueueTaskManager"
+grakn_tasks_postprocessing_delay: "60000"
+grakn_engine_loader_threads: "0"
+grakn_engine_log_dirs: "/var/log/grakn/cluster/engine/"
+grakn_engine_log_level: "INFO"
+
+storage_hostname: localhost
+#storage_cassandra_replication_strategy_class: org.apache.cassandra.locator.SimpleStrategy
+#storage_cassandra_replication_strategy_options: "replication_factor,1"
+
+redis_host: "localhost"
+redis_port: "6379"
+
+kafka_hosts: ['localhost']
+zookeeper_hosts: ['localhost']
+
+grakn_analytics_spark_master: "local[*]"
+grakn_analytics_spark_executor_cores: "1"
+grakn_analytics_spark_executor_memory: "1g"
+grakn_analytics_spark_cores_max: "6"
+
+# Grakn JVM settings
+grakn_engine_extra_options: "-Xmx12g -XX:+HeapDumpOnOutOfMemoryError"
+grakn_java_options: ""

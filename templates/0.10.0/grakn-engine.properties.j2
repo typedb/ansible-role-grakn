@@ -1,0 +1,76 @@
+#
+# Grakn - A Distributed Semantic Database
+# Copyright (C) 2016  Grakn Labs Limited
+#
+# Grakn is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Grakn is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Grakn. If not, see <http://www.gnu.org/licenses/gpl.txt>.
+#
+
+#In-Memory or Distributed task manager
+taskmanager.implementation={{grakn_engine_taskmanager_implementation}}
+
+# Logging
+logging.file.main={{ grakn_engine_logging_file_main }}
+logging.file.postprocessing={{ grakn_engine_logging_file_postprocessing }}
+logging.level={{ grakn_engine_logging_level }}
+
+#Titan Config
+graphdatabase.config=../conf/main/grakn.properties
+graphdatabase.computer=../conf/main/grakn-analytics.properties
+graphdatabase.default-keyspace=grakn
+
+#Spark Config
+server.port=4567
+server.host=0.0.0.0
+server.static-file-dir=../assets/
+
+#RESTLoader Config
+loader.repeat-commits=5
+
+#HAL builder
+halBuilder.degree=1
+
+#Blocking Loader Config
+blockingLoader.batch-size=60
+
+#Background tasks Config
+backgroundTasks.post-processing-delay=300000
+backgroundTasks.time-lapse=60000
+tasks.kafka.bootstrap-servers={% for seed in kafka_hosts %}{{seed}}:9092{% if not loop.last %},{% endif %}{% endfor %}
+
+tasks.kafka.consumer.session-timeout=30000
+tasks.kafka.producer.retries=0
+tasks.kafka.producer.batch-size=16384
+tasks.kafka.producer.linger-ms=1
+tasks.kafka.producer.buffer-mem=33554432
+tasks.zookeeper.servers={% for seed in zookeeper_hosts %}{{seed}}:2181{% if not loop.last %},{% endif %}{% endfor %}
+
+tasks.zookeeper.session_timeout_ms=60000
+tasks.zookeeper.connection_timeout_ms=15000
+tasks.zookeeper.backoff.base_sleep=1000
+tasks.zookeeper.backoff.max_retries=3
+tasks.scheduler.polling-frequency=1000
+tasks.runner.polling-frequency=1000
+
+#Loader Config
+loader.threads={{ grakn_engine_loader_threads }}
+
+#Distributed Loader
+loader.polling-frequency=1000
+
+#Authentication
+password.protected=false
+JWT.secret=Anzdz9l4TG8N5y18oaTDueqJQca1aX7loaz0U8Hz
+
+#Post Processing Load
+postprocessing.threads=20
