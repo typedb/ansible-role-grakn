@@ -14,6 +14,7 @@ grakn_engine_service_state: "started"
 custom_logback: false
 
 cluster_home: /opt/grakn/cluster/
+grakn_home: "{{ cluster_home }}/grakn-engine/"
 log_home: /var/log/grakn/
 user_name: grakn
 group_name: grakn

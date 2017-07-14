@@ -20,6 +20,7 @@
     mode: 755
   with_items:
        - "{{cluster_home}}"
+       - "{{grakn_home}}"
        - "{{log_home}}"
 
 - name: Check Grakn service exists
