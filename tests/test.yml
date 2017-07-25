@@ -3,8 +3,8 @@
 
   vars:
     grakn_engine_service_state: "stopped"
-    grakn_engine_version: "0.14.0"
-    grakn_download_url: "https://oss.sonatype.org/service/local/repositories/releases/content/ai/grakn/grakn-dist/0.14.0/grakn-dist-0.14.0.tar.gz"
+    grakn_engine_version: "0.15.0"
+    grakn_download_url: "https://oss.sonatype.org/service/local/repositories/releases/content/ai/grakn/grakn-dist/{{ grakn_engine_version }}/grakn-dist-{{ grakn_engine_version }}.tar.gz"
 
   pre_tasks:
     - name: Update apt cache.

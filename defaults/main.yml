@@ -1,6 +1,6 @@
 ---
 # Grakn deployment
-grakn_engine_version: "0.14.0"
+grakn_engine_version: "0.15.0"
 grakn_engine_dist: "grakn-dist-{{ grakn_engine_version }}"
 grakn_engine_archive_format: "tar.gz"
 grakn_engine_package: "{{ grakn_engine_dist }}.{{ grakn_engine_archive_format }}"
