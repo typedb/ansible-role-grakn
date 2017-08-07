@@ -79,7 +79,7 @@
       owner: "{{user_name}}"
       group: "{{group_name}}"
     with_first_found:
-      - "{{ grakn_engine_version }}/grakn.properties.j2"
+      - "{{ grakn_engine_version | regex_replace('-SNAPSHOT') }}/grakn.properties.j2"
       - "grakn.properties.j2"
     notify: restart grakn-engine
 
