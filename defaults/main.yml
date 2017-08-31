@@ -20,7 +20,7 @@ group_name: grakn
 
 # Grakn properties
 grakn_graph_sharding_threshold: "100000"
-grakn_graph_ontology_cache_timeout_ms: "120000"
+grakn_graph_schema_cache_timeout_ms: "120000"
 grakn_taskmanager_implementation: "ai.grakn.engine.tasks.manager.singlequeue.SingleQueueTaskManager"
 grakn_tasks_postprocessing_delay: "60000"
 grakn_loader_threads: "0"
