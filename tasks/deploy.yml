@@ -99,8 +99,8 @@
 
   - name: Configure grakn.sh startup script
     template:
-      src: "grakn.sh.j2"
-      dest: "{{ cluster_home }}/grakn/services/grakn.sh"
+      src: "grakn-engine.sh.j2"
+      dest: "{{ cluster_home }}/grakn/services/grakn-engine.sh"
       owner: "{{user_name}}"
       group: "{{group_name}}"
     notify: restart grakn
@@ -144,9 +144,9 @@
   with_items:
     - "{{cluster_home}}/grakn/"
 
-- name: Start Grakn
-  block:
-  - service:
+- block:
+  - name: Start Grakn
+    service:
       name: grakn
       state: "{{ grakn_service_state }}"
       enabled: yes
