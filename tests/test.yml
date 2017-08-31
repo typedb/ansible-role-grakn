@@ -3,8 +3,8 @@
 
   vars:
     grakn_service_state: "stopped"
-    grakn_version: "0.16.0"
-    grakn_download_url: "https://oss.sonatype.org/service/local/repositories/releases/content/ai/grakn/grakn-dist/{{ grakn_version }}/grakn-dist-{{ grakn_version }}.tar.gz"
+    grakn_version: "PR-1966"
+    grakn_download_url: "https://jenkins.grakn.ai/job/grakn/view/change-requests/job/PR-1966/lastSuccessfulBuild/artifact/grakn-dist/target/grakn-dist-PR-1966.tar.gz"
 
   pre_tasks:
     - name: Update apt cache.
