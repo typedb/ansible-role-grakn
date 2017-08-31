@@ -1,15 +1,15 @@
 [Unit]
-Description=Grakn Engine
+Description=Grakn
 After=network.target
 
 [Service]
-EnvironmentFile=-/etc/default/grakn-engine
+EnvironmentFile=-/etc/default/grakn
 {% if systemd_execstartpre is defined %}
-ExecStartPre={{cluster_home}}/grakn-engine/bin/configure.sh
+ExecStartPre={{cluster_home}}/grakn/services/configure.sh
 {% endif %}
-ExecStart={{cluster_home}}/grakn-engine/bin/grakn-engine.sh start
-ExecStop={{cluster_home}}/grakn-engine/bin/grakn-engine.sh stop
-WorkingDirectory={{cluster_home}}/grakn-engine/bin/
+ExecStart={{cluster_home}}/grakn/grakn server start
+ExecStop={{cluster_home}}/grakn/grakn server stop
+WorkingDirectory={{cluster_home}}/grakn/
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
