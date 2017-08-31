@@ -10,5 +10,29 @@
       apt: update_cache=yes cache_valid_time=600
       when: ansible_os_family == 'Debian'
 
+    - name: Add repo for Java8
+      apt_repository:
+        repo: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main"
+        - "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main"
+
+    - name: Add repository key
+      apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=EEA14886 state=present
+
+    - name: Accept licence
+      debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
+    - name: Install Oracle JDK 8
+      apt:
+        name: "{{ item }}"
+        state: present
+        allow_unauthenticated: yes
+      with_items:
+        - oracle-java8-installer
+        - oracle-java8-unlimited-jce-policy
+
   roles:
     - role_under_test
