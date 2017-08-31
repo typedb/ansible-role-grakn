@@ -1,6 +1,6 @@
 ---
-- name: restart grakn-engine
+- name: restart grakn
   service:
-    name: grakn-engine
+    name: grakn
     state: restarted
-  when: grakn_engine_service_state == "started"
+  when: grakn_service_state == "started"
