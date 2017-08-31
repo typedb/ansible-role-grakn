@@ -1,3 +1,2 @@
-systemd_execstartpre: "{{cluster_home}}/grakn/services/configure.sh"
 storage_cassandra_replication_strategy_class: org.apache.cassandra.locator.NetworkTopologyStrategy
 storage_cassandra_replication_strategy_options: "eu-west1,1"
