@@ -2,6 +2,7 @@
 - hosts: all
 
   vars:
+    grakn_service_state: "stopped"
     grakn_version: "PR-1966"
     grakn_download_url: "https://jenkins.grakn.ai/job/grakn/view/change-requests/job/PR-1966/78/artifact/grakn-dist/target/grakn-dist-PR-1966.tar.gz"
 
