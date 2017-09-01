@@ -3,8 +3,8 @@
 
   vars:
     grakn_service_state: "stopped"
-    grakn_version: "stable"
-    grakn_download_url: "https://jenkins.grakn.ai/job/grakn/job/stable/lastCompletedBuild/artifact/grakn-dist/target/grakn-dist-stable.tar.gz"
+    grakn_version: "master"
+    grakn_download_url: "https://jenkins.grakn.ai/job/grakn/job/master/lastCompletedBuild/artifact/grakn-dist/target/grakn-dist-master.tar.gz"
 
   pre_tasks:
     - name: Update apt cache.
