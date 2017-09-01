@@ -144,11 +144,8 @@
   with_items:
     - "{{cluster_home}}/grakn/"
 
-- block:
-  - name: Start Grakn
-    service:
-      name: grakn
-      state: "{{ grakn_service_state }}"
-      enabled: yes
-  rescue:
-  - shell: systemctl status grakn.service
+- name: Start Grakn
+  service:
+    name: grakn
+    state: "{{ grakn_service_state }}"
+    enabled: yes
