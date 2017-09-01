@@ -97,7 +97,7 @@
     when: custom_logback == true
     notify: restart grakn
 
-  - name: Configure grakn.sh startup script
+  - name: Configure grakn-engine.sh startup script
     template:
       src: "grakn-engine.sh.j2"
       dest: "{{ cluster_home }}/grakn/services/grakn-engine.sh"
