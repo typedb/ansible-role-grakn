@@ -19,8 +19,8 @@ user_name: grakn
 group_name: grakn
 
 # Grakn properties
-grakn_graph_sharding_threshold: "100000"
-grakn_graph_ontology_cache_timeout_ms: "120000"
+grakn_knowledge_base_sharding_threshold: "100000"
+grakn_knowledge_base_ontology_cache_timeout_ms: "120000"
 grakn_engine_taskmanager_implementation: "ai.grakn.engine.tasks.manager.singlequeue.SingleQueueTaskManager"
 grakn_tasks_postprocessing_delay: "60000"
 grakn_engine_loader_threads: "0"
@@ -31,8 +31,7 @@ storage_hostname: localhost
 #storage_cassandra_replication_strategy_class: org.apache.cassandra.locator.SimpleStrategy
 #storage_cassandra_replication_strategy_options: "replication_factor,1"
 
-redis_host: "localhost"
-redis_port: "6379"
+queue_host: "localhost:6379"
 
 kafka_hosts: ['localhost']
 zookeeper_hosts: ['localhost']
