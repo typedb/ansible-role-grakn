@@ -20,6 +20,7 @@
     mode: 755
   with_items:
        - "{{cluster_home}}"
+       - "{{grakn_home}}"
        - "{{log_home}}"
 
 - name: Check Grakn service exists
@@ -58,13 +59,9 @@
 - name: Unpack Grakn
   unarchive:
     src: "/tmp/{{ grakn_engine_package }}"
-    dest: "/tmp/"
+    dest: "{{ cluster_home }}/grakn-engine/"
     copy: no
-    creates: "{{ cluster_home }}/grakn-engine/"
-
-- name: Rename directory
-  command: "mv /tmp/{{ grakn_engine_dist }} {{ cluster_home }}/grakn-engine"
-  args:
+    extra_opts: "--strip-components=1"
     creates: "{{ cluster_home }}/grakn-engine/"
 
 - block:
