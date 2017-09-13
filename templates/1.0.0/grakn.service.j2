@@ -7,8 +7,8 @@ EnvironmentFile=-/etc/default/grakn
 {% if systemd_execstartpre is defined %}
 ExecStartPre={{cluster_home}}/grakn/services/configure.sh
 {% endif %}
-ExecStart={{cluster_home}}/grakn/grakn server start
-ExecStop={{cluster_home}}/grakn/grakn server stop
+ExecStart={{cluster_home}}/grakn/bin/grakn-engine.sh start
+ExecStop={{cluster_home}}/grakn/bin/grakn-engine.sh start
 WorkingDirectory={{cluster_home}}/grakn/
 ExecReload=/bin/kill -HUP $MAINPID
 User=grakn

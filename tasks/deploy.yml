@@ -75,7 +75,7 @@
   - name: Configure grakn.properties
     template:
       src: "{{ item }}"
-      dest: "{{ cluster_home }}/grakn/conf/grakn.properties"
+      dest: "{{ cluster_home }}/grakn/conf/main/grakn.properties"
       owner: "{{user_name}}"
       group: "{{group_name}}"
     with_first_found:
@@ -97,13 +97,21 @@
     when: custom_logback == true
     notify: restart grakn
 
-  - name: Configure grakn-engine.sh startup script
-    template:
-      src: "grakn-engine.sh.j2"
-      dest: "{{ cluster_home }}/grakn/services/grakn-engine.sh"
-      owner: "{{user_name}}"
-      group: "{{group_name}}"
-    notify: restart grakn
+  # - name: Configure cassandra.yaml
+  #   template:
+  #     src: "templates/1.0.0/cassandra.yaml.j2"
+  #     dest: "{{ cluster_home }}/grakn/services/cassandra/cassandra.yaml"
+  #     owner: "{{user_name}}"
+  #     group: "{{group_name}}"
+  #   # notify: restart grakn
+
+  # - name: Configure redis.conf
+  #   template:
+  #     src: "templates/1.0.0/redis.conf.j2"
+  #     dest: "{{ cluster_home }}/grakn/services/redis/redis.conf"
+  #     owner: "{{user_name}}"
+  #     group: "{{group_name}}"
+  #   # notify: restart grakn
 
   - name: systemd service
     template:
@@ -144,8 +152,8 @@
   with_items:
     - "{{cluster_home}}/grakn/"
 
-- name: Start Grakn
-  service:
-    name: grakn
-    state: "{{ grakn_service_state }}"
-    enabled: yes
+# - name: Start Grakn
+#   service:
+#     name: grakn
+#     state: "{{ grakn_service_state }}"
+#     enabled: yes
