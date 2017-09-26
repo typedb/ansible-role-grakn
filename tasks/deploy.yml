@@ -75,7 +75,7 @@
   - name: Configure grakn.properties
     template:
       src: "{{ item }}"
-      dest: "{{ cluster_home }}/grakn/conf/main/grakn.properties"
+      dest: "{{ cluster_home }}/grakn/conf/grakn.properties"
       owner: "{{user_name}}"
       group: "{{group_name}}"
     with_first_found:
@@ -152,8 +152,8 @@
   with_items:
     - "{{cluster_home}}/grakn/"
 
-# - name: Start Grakn
-#   service:
-#     name: grakn
-#     state: "{{ grakn_service_state }}"
-#     enabled: yes
+- name: Start Grakn
+  service:
+    name: grakn
+    state: "{{ grakn_service_state }}"
+    enabled: yes
