@@ -1,4 +1,8 @@
 ---
+#### Global settings ####
+
+host_address: "{{ansible_default_ipv4.address}}"
+
 # Grakn deployment
 grakn_version: "1.0.0"
 grakn_dist: "grakn-dist-{{ grakn_version }}"
@@ -13,7 +17,7 @@ grakn_download_url: "https://github.com/graknlabs/grakn/releases/download/v{{ gr
 grakn_service_state: "started"
 custom_logback: false
 
-cluster_home: /opt/grakn/cluster/
+cluster_home: /opt/
 log_home: /var/log/grakn/
 user_name: grakn
 group_name: grakn
@@ -24,7 +28,7 @@ grakn_knowledge_base_schema_cache_timeout_ms: "120000"
 grakn_engine_taskmanager_implementation: "ai.grakn.engine.tasks.manager.singlequeue.SingleQueueTaskManager"
 grakn_tasks_postprocessing_delay: "60000"
 grakn_loader_threads: "0"
-grakn_log_dirs: "/var/log/grakn/cluster/engine/"
+grakn_log_dirs: "/var/log/grakn/"
 grakn_log_level: "INFO"
 
 storage_hostname: localhost
