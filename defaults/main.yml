@@ -37,9 +37,6 @@ storage_hostname: localhost
 
 queue_host: "localhost:6379"
 
-kafka_hosts: ['localhost']
-zookeeper_hosts: ['localhost']
-
 grakn_analytics_spark_master: "local[*]"
 grakn_analytics_spark_executor_cores: "1"
 grakn_analytics_spark_executor_memory: "1g"
@@ -51,52 +48,6 @@ grakn_java_options: ""
 
 # Google Cloud Platform
 gcp_autoconfigure: false
-
-#### Global settings ####
-
-host_address: "{{ansible_default_ipv4.address}}"
-
-#### Storage settings ####
-
-cassandra_version: 2.1.17
-cassandra_mirror: "http://www.eu.apache.org/dist/cassandra/{{cassandra_version}}"
-cassandra_archive_mirror: "http://archive.apache.org/dist/cassandra/{{cassandra_version}}"
-cassandra_tarball_name: "apache-cassandra-{{cassandra_version}}-bin.tar.gz"
-
-cassandra_host_address: "{{host_address}}"
-cassandra_rpc_address: "0.0.0.0"
-cassandra_broadcast_rpc_address: "{{host_address}}"
-
-cassandra_num_tokens: 256
-
-cassandra_hosts: ["{{cassandra_host_address}}"]
-cassandra_seeds: ["{{cassandra_host_address}}"]
-
-cassandra_replication_factor: "{{cassandra_hosts | length }}"
-cassandra_keyspace: grakn
-cassandra_read_consistency: ONE
-cassandra_write_consistency: ONE
-
-cassandra_partitioner: org.apache.cassandra.dht.Murmur3Partitioner
-
-cassandra_dir: /var/lib/cassandra
-cassandra_data_dir: /var/lib/cassandra/data
-cassandra_commitlog_dir: /var/lib/cassandra/commitlog
-cassandra_saved_caches_dir: /var/lib/cassandra/saved_caches
-
-cassandra_concurrent_reads: 16
-cassandra_concurrent_writes: 16
-cassandra_concurrent_counter_writes: 32
-
-cassandra_compaction_throughput_mb_per_sec: 16
-
-cassandra_endpoint_snitch: "SimpleSnitch"
-
-#ports
-cassandra_storage_port: 7000
-cassandra_ssl_storage_port: 7001
-cassandra_native_transport_port: 9042
-cassandra_rpc_port: 9160
 
 #ulimit configuration
 ulimit_config: 

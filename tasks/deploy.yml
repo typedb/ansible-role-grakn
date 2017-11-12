@@ -97,22 +97,6 @@
     when: custom_logback == true
     notify: restart grakn
 
-  # - name: Configure cassandra.yaml
-  #   template:
-  #     src: "templates/1.0.0/cassandra.yaml.j2"
-  #     dest: "{{ cluster_home }}/grakn/services/cassandra/cassandra.yaml"
-  #     owner: "{{user_name}}"
-  #     group: "{{group_name}}"
-  #   # notify: restart grakn
-
-  # - name: Configure redis.conf
-  #   template:
-  #     src: "templates/1.0.0/redis.conf.j2"
-  #     dest: "{{ cluster_home }}/grakn/services/redis/redis.conf"
-  #     owner: "{{user_name}}"
-  #     group: "{{group_name}}"
-  #   # notify: restart grakn
-
   - name: systemd service
     template:
       src: "{{ item }}"
