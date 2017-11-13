@@ -140,4 +140,4 @@
   service:
     name: grakn
     state: "{{ grakn_service_state }}"
-    enabled: yes
+    enabled: "{{ grakn_service_enabled }}"

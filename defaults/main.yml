@@ -15,6 +15,7 @@ grakn_package_directory: "files/"
 grakn_download_url: "https://github.com/graknlabs/grakn/releases/download/v{{ grakn_version }}/{{ grakn_package }}"
 
 grakn_service_state: "started"
+grakn_service_enabled: "yes"
 custom_logback: false
 
 cluster_home: /opt/
