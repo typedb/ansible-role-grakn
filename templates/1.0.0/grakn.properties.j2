@@ -56,7 +56,7 @@ server.host=0.0.0.0
 # then an arbitrary available port will be used
 server.port=4567
 # Set the external folder serving static files to the Grakn dashboard.
-server.static-file-dir=../services/assets/
+server.static-file-dir=./services/assets/
 
 # Number of times to retry graph mutations if a temporary backend exception occurs
 # during the mutation. If this number is set to 0, the server will not retry.
@@ -80,7 +80,7 @@ webserver.threads={{ grakn_webserver_threads }}
 
 # Single directory under which to store log files. If using a relative path it will be relative
 # to the JVM system variable "grakn.dir"
-log.dirs={{ cluster_home }}/grakn/logs
+log.dirs=./logs/
 # Specify the log verbosity level. This can be one of:
 #
 # ERROR: (critical errors indicating the application has failed)
@@ -99,13 +99,6 @@ storage.backend=grakn-production
 storage.hostname={{ storage_hostname }}
 # Timeout in milliseconds when connecting to storage backend
 storage.connection-timeout=20000
-
-{% if storage_cassandra_replication_strategy_class is defined %}
-storage.cassandra.replication-strategy-class = {{ storage_cassandra_replication_strategy_class }}
-{% endif %}
-{% if storage_cassandra_replication_strategy_options is defined %}
-storage.cassandra.replication-strategy-options = {{ storage_cassandra_replication_strategy_options }}
-{% endif %}
 
 # Whether to enable the database-level cache, which is shared across all transactions.
 # Enabling this option speeds up traversals by holding hot elements in memory,
