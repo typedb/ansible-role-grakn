@@ -141,3 +141,11 @@
     name: grakn
     state: "{{ grakn_service_state }}"
     enabled: "{{ grakn_service_enabled }}"
+
+- name: Create symlinks
+  file:
+     src: "{{ cluster_home }}/grakn/{{ item.path }}"
+     dest: "/usr/local/bin/{{ item.dest }}"
+     state: link
+  with_items:
+     - { path: 'graql', dest: 'graql' }
