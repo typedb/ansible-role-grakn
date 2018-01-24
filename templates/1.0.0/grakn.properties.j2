@@ -58,32 +58,22 @@ server.port=4567
 # Set the external folder serving static files to the Grakn dashboard.
 server.static-file-dir=../services/assets/
 
-# May either be "true" or "false" to enable authentication for protected REST endpoints.
-# When true must include the JWT token
-password.protected=false
-admin.password=grakn
-
-# The task manager is responsible for the maintaining the lifecycle of tasks, including
-# restarting tasks when an engine instance dies.
-taskmanager.implementation=ai.grakn.engine.tasks.manager.RedisTaskManager
-
 # Number of times to retry graph mutations if a temporary backend exception occurs
 # during the mutation. If this number is set to 0, the server will not retry.
 loader.repeat-commits=5
 
-# The delay after which post processing tasks should begin to execute. This delay should
-# be enough such that all initial duplicates have been created. A higher delay may
-# slow down batch loading and a lower delay may result in duplicates in the knowledge-base.
-tasks.postprocessing.delay={{ grakn_tasks_postprocessing_delay }}
+# The delay in seconds between receiving a task and executing it.
+# This is to give time for any indices relating to the task to be finalised
+tasks.delay={{ grakn_tasks_postprocessing_delay }}
 
 # This defines the number of threads to be used when executing tasks. Consider
 # increasing this number to increase engine task throughput and CPU usage.
 # If the provided number of threads = 0 then the number of processors available to
 # the Java virtual machine at startup time will be used.
 loader.threads={{ grakn_loader_threads }}
-# JWT json key used to encrypt and decrypt the token send in REST requests
-# If authentication above (password.protected) is false, this property is not used
-JWT.secret=Anzdz9l4TG8N5y18oaTDueqJQca1aX7loaz0U8Hz
+
+# The max number of threads in Spark's thread pool
+webserver.threads={{ grakn_webserver_threads }}
 
 ############################# Logging Configuration #############################
 # These properties are read directly by logback.xml
@@ -107,6 +97,8 @@ log.level={{ grakn_log_level}}
 storage.backend=grakn-production
 # The hostname or comma-separated list of hostnames of storage backend servers
 storage.hostname={{ storage_hostname }}
+# Timeout in milliseconds when connecting to storage backend
+storage.connection-timeout=20000
 
 {% if storage_cassandra_replication_strategy_class is defined %}
 storage.cassandra.replication-strategy-class = {{ storage_cassandra_replication_strategy_class }}
@@ -129,8 +121,8 @@ cache.db-cache-time=180000
 # Size of Janus's database cache in proportion to JVM size 0 (small) to 1 (large)
 cache.db-cache-size=0.25
 
-
 ############################# Redis Configuration #############################
 # IP or hostname on which Redis is listening for connections.
 queue.host={{ queue_host }}
-#queue.consumers=128
+queue.consumers=32
+redis.pool-size=32

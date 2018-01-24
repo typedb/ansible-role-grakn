@@ -29,6 +29,7 @@ grakn_knowledge_base_schema_cache_timeout_ms: "120000"
 grakn_engine_taskmanager_implementation: "ai.grakn.engine.tasks.manager.singlequeue.SingleQueueTaskManager"
 grakn_tasks_postprocessing_delay: "60000"
 grakn_loader_threads: "0"
+grakn_webserver_threads: "64"
 grakn_log_dirs: "/var/log/grakn/"
 grakn_log_level: "INFO"
 
