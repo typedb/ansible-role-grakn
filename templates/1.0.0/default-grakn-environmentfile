@@ -1,2 +1,2 @@
-_JAVA_OPTIONS="{{ grakn_java_options }}"
+JAVA_OPTIONS="{{ grakn_java_options }}"
 HADOOP_GREMLIN_LIBS={{cluster_home}}/grakn-engine/lib/
