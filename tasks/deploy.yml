@@ -35,7 +35,7 @@
 
 - name: Delete old Grakn
   file:
-    path: "{{cluster_home}}/grakn"
+    path: "{{cluster_home}}grakn"
     state: absent
   when: redeploy == true
 
@@ -134,10 +134,18 @@
     group: "{{group_name}}"
     recurse: yes
   with_items:
-    - "{{cluster_home}}/grakn/"
+    - "{{cluster_home}}grakn/"
 
 - name: Start Grakn
   service:
     name: grakn
     state: "{{ grakn_service_state }}"
     enabled: "{{ grakn_service_enabled }}"
+
+- name: Create symlinks
+  file:
+     src: "{{ cluster_home }}/grakn/{{ item.path }}"
+     dest: "/usr/local/bin/{{ item.dest }}"
+     state: link
+  with_items:
+     - { path: 'graql', dest: 'graql' }

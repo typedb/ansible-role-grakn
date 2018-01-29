@@ -3,13 +3,9 @@ Description=Grakn
 After=network.target
 
 [Service]
-EnvironmentFile=-/etc/default/grakn
-{% if systemd_execstartpre is defined %}
-ExecStartPre={{cluster_home}}/grakn/services/configure.sh
-{% endif %}
-ExecStart={{cluster_home}}/grakn/grakn server start
-ExecStop={{cluster_home}}/grakn/grakn server stop
-WorkingDirectory={{cluster_home}}/grakn/
+ExecStart={{cluster_home}}grakn/grakn server start
+ExecStop={{cluster_home}}grakn/grakn server stop
+WorkingDirectory={{cluster_home}}grakn/
 ExecReload=/bin/kill -HUP $MAINPID
 User=grakn
 Group=grakn

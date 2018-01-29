@@ -3,8 +3,8 @@ Description=Grakn Engine
 After=network.target
 
 [Service]
-ExecStart={{cluster_home}}/grakn-engine/bin/grakn-engine.sh start
-ExecStop={{cluster_home}}/grakn-engine/bin/grakn-engine.sh stop
+ExecStart={{cluster_home}}grakn-engine/bin/grakn-engine.sh start
+ExecStop={{cluster_home}}grakn-engine/bin/grakn-engine.sh stop
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
