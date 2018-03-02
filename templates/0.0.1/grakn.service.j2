@@ -1,0 +1,19 @@
+[Unit]
+Description=Grakn
+After=network.target
+
+[Service]
+ExecStart={{cluster_home}}grakn/grakn server start --license {{grakn_license}}
+ExecStop={{cluster_home}}grakn/grakn server stop
+WorkingDirectory={{cluster_home}}grakn/
+ExecReload=/bin/kill -HUP $MAINPID
+User=grakn
+Group=grakn
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+Alias=grakn-engine.service

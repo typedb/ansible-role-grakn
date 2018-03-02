@@ -51,7 +51,7 @@
 
 - name: Upload new Grakn
   copy:
-    src: "{{ grakn_package_directory }}/{{ grakn_package }}"
+    src: "{{ grakn_upload_directory }}/{{ grakn_package }}"
     dest: "/tmp/"
   when: upload_release == true
 
@@ -67,11 +67,19 @@
   args:
     creates: "{{ cluster_home }}/grakn/"
 
-- block:
-  - set_fact:
-      storage_hostname: "{% for host in cassandra_hosts %}{{host}}{% if not loop.last %},{% endif %}{% endfor %}"
-    when: cassandra_hosts is defined
+- name: Upload license
+  copy:
+    src: "{{ grakn_upload_directory }}/{{ grakn_license }}"
+    dest: "{{ cluster_home }}/grakn/"
+  #when: grakn_dist | search("kbms")
 
+- name: Upload decrypt file
+  copy:
+    src: "{{ grakn_upload_directory }}/{{ grakn_decrypt }}"
+    dest: "{{ cluster_home }}/grakn/"
+  #when: grakn_dist | search("kbms")
+
+- block:
   - name: Configure grakn.properties
     template:
       src: "{{ item }}"
@@ -136,6 +144,7 @@
   with_items:
     - "{{cluster_home}}grakn/"
 
+#TODO update
 - name: Start Grakn
   service:
     name: grakn

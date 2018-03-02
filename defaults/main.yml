@@ -4,14 +4,16 @@
 host_address: "{{ansible_default_ipv4.address}}"
 
 # Grakn deployment
-grakn_version: "1.0.0"
-grakn_dist: "grakn-dist-{{ grakn_version }}"
+grakn_version: "0.0.1"
+grakn_dist: "grakn-kbms-dist-{{ grakn_version }}-SNAPSHOT"
 grakn_archive_format: "tar.gz"
 grakn_package: "{{ grakn_dist }}.{{ grakn_archive_format }}"
 
 redeploy: false
-upload_release: false
-grakn_package_directory: "files/"
+upload_release: True
+grakn_upload_directory: "files/"
+grakn_license: "license.grakn"
+grakn_decrypt: "decrypt.grakn"
 grakn_download_url: "https://github.com/graknlabs/grakn/releases/download/v{{ grakn_version }}/{{ grakn_package }}"
 
 grakn_service_state: "started"
@@ -30,12 +32,10 @@ grakn_engine_taskmanager_implementation: "ai.grakn.engine.tasks.manager.singlequ
 grakn_tasks_postprocessing_delay: "1800"
 grakn_loader_threads: "4"
 grakn_webserver_threads: "64"
+grakn_background_tasks_threads: "1"
 grakn_log_level: "INFO"
 
 storage_hostname: localhost
-#storage_cassandra_replication_strategy_class: org.apache.cassandra.locator.SimpleStrategy
-#storage_cassandra_replication_strategy_options: "replication_factor,1"
-
 queue_host: "localhost:6379"
 
 grakn_analytics_spark_master: "local[*]"
