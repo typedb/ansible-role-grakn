@@ -32,6 +32,9 @@ knowledge-base.schema-cache-timeout-ms={{ grakn_knowledge_base_schema_cache_time
 
 ############################# Server Configuration #############################
 
+# Directory in which server data will be stored
+data-dir={{ db_home }}
+
 # Set the IP address that Grakn engine server will listen on.
 server.host=0.0.0.0
 # Port number to use for Grakn engine server to listen on. If provided port = 0
@@ -69,7 +72,7 @@ grpc.port=48555
 
 # Single directory under which to store log files. If using a relative path it will be relative
 # to the JVM system variable "grakn.dir"
-log.dirs=./logs/
+log.dirs={{ log_home }}
 # Specify the log verbosity level. This can be one of:
 #
 # ERROR: (critical errors indicating the application has failed)
@@ -117,26 +120,26 @@ redis.sentinel.host=
 
 ############################# KBMS License Configuration #############################
 # CQL driver port - this is different from storage.port in open source version because different drivers are used.
-kbms.storage.port=9042
+kgms.storage.port=9042
 
 ############################# KBMS License Configuration #############################
-kbms.license=./{{ grakn_license}}
-kbms.decrypt=./{{ grakn_decrypt}}
+kgms.license=./{{ grakn_license}}
+kgms.decrypt=./{{ grakn_decrypt}}
 
 ############################# KBMS Encryption Configuration #############################
-kbms.encryption-secret=graknbmssecret
+kgms.encryption-secret=graknbmssecret
 
 ############################# KBMS Clustering Configuration #############################
 
 # Cluster monitoring interval in seconds
-kbms.cluster.monitor-interval=1
+kgms.cluster.monitor-interval=1
 
 ############################# KBMS gRPC Configuration #############################
 
 # gRPC port for KBMS - this is because we currently start two grpc servers (until we will define how to merge them)
-kbms.grpc.port=2345
+kgms.grpc.port=2345
 
 ############################# KBMS TLS Configuration #############################
-kbms.server.private-key=./server.pem
-kbms.server.certificate=./server.crt
-kbms.client.trust-store=./trustedCert.crt
+kgms.server.private-key=./server.pem
+kgms.server.certificate=./server.crt
+kgms.client.trust-store=./trustedCert.crt

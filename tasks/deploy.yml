@@ -144,7 +144,6 @@
   with_items:
     - "{{cluster_home}}grakn/"
 
-#TODO update
 - name: Start Grakn
   service:
     name: grakn

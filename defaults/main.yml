@@ -21,7 +21,8 @@ grakn_service_enabled: "yes"
 custom_logback: false
 
 cluster_home: /opt/
-log_home: /var/log/grakn/
+db_home: /mnt/data1/
+log_home: ./logs/
 user_name: grakn
 group_name: grakn
 
