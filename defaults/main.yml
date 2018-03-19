@@ -37,6 +37,7 @@ grakn_background_tasks_threads: "1"
 grakn_log_level: "INFO"
 
 storage_hostname: localhost
+storage_num_tokens: 64
 queue_host: "localhost:6379"
 
 grakn_analytics_spark_master: "local[*]"
