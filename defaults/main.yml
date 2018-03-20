@@ -22,7 +22,7 @@ custom_logback: false
 
 cluster_home: /opt/
 db_home: /mnt/data1/
-log_home: ./logs/
+log_home: /var/log/grakn/
 user_name: grakn
 group_name: grakn
 

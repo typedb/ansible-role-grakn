@@ -94,7 +94,7 @@
   - name: Configure logback.xml
     template:
       src: "{{ item }}"
-      dest: "{{ cluster_home }}/grakn/conf/main/logback.xml"
+      dest: "{{ cluster_home }}/grakn/conf/logback.xml"
       owner: "{{user_name}}"
       group: "{{group_name}}"
     with_first_found:
