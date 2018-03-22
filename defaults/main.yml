@@ -38,6 +38,7 @@ grakn_log_level: "INFO"
 
 storage_hostname: localhost
 storage_num_tokens: 64
+storage_replication_factor: 3
 queue_host: "localhost:6379"
 
 grakn_analytics_spark_master: "local[*]"

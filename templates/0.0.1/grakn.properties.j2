@@ -96,6 +96,7 @@ storage.connection-timeout=20000
 storage.username=cassandra
 storage.password=cassandra
 
+storage.cassandra.replication-factor= {{ storage_replication_factor }}
 storage.internal.num_tokens= {{ storage_num_tokens }}
 
 # Whether to enable the database-level cache, which is shared across all transactions.
