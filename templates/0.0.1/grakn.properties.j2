@@ -90,11 +90,12 @@ storage.backend=grakn-production
 # The hostname or comma-separated list of hostnames of storage backend servers
 storage.hostname={{ storage_hostname }}
 storage.port=9160
+
 # Timeout in milliseconds when connecting to storage backend
-storage.connection-timeout=900000 # 15 minutes
-storage.read-time=900000 # 15 minutes
-storage.setup-wait=900000 # 15 minutes
-storage.write-time=900000 # 15 minutes
+storage.connection-timeout=900000
+storage.read-time=900000
+storage.setup-wait=900000
+storage.write-time=900000
 
 # Super user credentials
 graknsystem.username=cassandra
