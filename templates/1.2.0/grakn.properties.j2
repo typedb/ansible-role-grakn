@@ -90,12 +90,18 @@ storage.backend=grakn-production
 # The hostname or comma-separated list of hostnames of storage backend servers
 storage.hostname={{ storage_hostname }}
 storage.port=9160
+
 # Timeout in milliseconds when connecting to storage backend
-storage.connection-timeout=20000
+storage.connection-timeout=1800000
+storage.read-time=1800000
+storage.setup-wait=1800000
+storage.write-time=1800000
+
 # Super user credentials
 graknsystem.username=cassandra
 graknsystem.password=cassandra
 
+storage.cassandra.replication-factor= {{ storage_replication_factor }}
 storage.internal.num_tokens= {{ storage_num_tokens }}
 
 # Whether to enable the database-level cache, which is shared across all transactions.
