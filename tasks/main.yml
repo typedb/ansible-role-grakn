@@ -7,16 +7,6 @@
 
   - include: deploy.yml
 
-  - name: Google Cloud Platform config script 
-    copy:
-      src: configure-gcp.sh
-      dest: "{{ cluster_home }}/grakn-engine/bin/configure.sh"
-      owner: "{{user_name}}"
-      group: "{{group_name}}"
-      mode: 0755
-    when: ansible_system_vendor == "Google" and gcp_autoconfigure == true
-
   tags:
-    - "role:grakn-engine"
     - "role:grakn"
     - "role:engine"

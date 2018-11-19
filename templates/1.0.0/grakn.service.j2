@@ -1,11 +1,14 @@
 [Unit]
-Description=Grakn Engine
+Description=Grakn
 After=network.target
 
 [Service]
-ExecStart={{cluster_home}}grakn-engine/bin/grakn-engine.sh start
-ExecStop={{cluster_home}}grakn-engine/bin/grakn-engine.sh stop
+ExecStart={{cluster_home}}grakn/grakn server start
+ExecStop={{cluster_home}}grakn/grakn server stop
+WorkingDirectory={{cluster_home}}grakn/
 ExecReload=/bin/kill -HUP $MAINPID
+User=grakn
+Group=grakn
 KillMode=process
 Restart=on-failure
 RestartPreventExitStatus=255

@@ -26,7 +26,7 @@ For defaults values of the variables below, see `defaults/main.yml`.
 
 Grakn version:
 ```
-grakn_engine_version: "0.14.0"
+grakn_version: "0.14.0"
 ```
 
 Backend configuration:
@@ -46,11 +46,11 @@ redis_host: "localhost" # single server
 
 Java options passed directly to the JVM on the command line:
 ```
-grakn_engine_extra_options: "-Xmx12g -XX:+HeapDumpOnOutOfMemoryError"
+grakn_extra_options: "-Xmx12g -XX:+HeapDumpOnOutOfMemoryError"
 ```
 Log level for Grakn:
 ```
-grakn_engine_log_level: "INFO"
+grakn_log_level: "INFO"
 ```
 ### Deploying custom releases
 Your package needs to be named `grakn-dist-SOME_VERSION.tar.gz`.  
@@ -60,7 +60,7 @@ This can be obtain by [compiling Grakn from source](https://grakn.ai/pages/docum
 By default, the role will download the release available on GitHub and install it on the server.  
 To download from a custom location, add this to `group_vars/all`:
 ```
-grakn_engine_version: SOME_VERSION
+grakn_version: SOME_VERSION
 grakn_download_url: "https://example.com/path/to/grakn-dist-SOME_VERSION.tar.gz"
 ```
 You must specify the version so the playbook extracts the correct directory from archive and deploys the matching configuration.
@@ -70,11 +70,11 @@ The distribution archive must be located in `files/` of the playbook's directory
 Add the following to your `group_vars/all`:
 ```
 upload_release: true
-grakn_engine_version: SOME_VERSION
+grakn_version: SOME_VERSION
 ```
 If you want to specify an alternative directory, use:
 ```
-grakn_engine_package_directory: "/full/path/to/tar/"
+grakn_package_directory: "/full/path/to/tar/"
 ```
 
 #### Upgrade / re-deploy Grakn

@@ -1,40 +1,48 @@
 ---
+#### Global settings ####
+
+host_address: "{{ansible_default_ipv4.address}}"
+
 # Grakn deployment
-grakn_engine_version: "0.15.0"
-grakn_engine_dist: "grakn-dist-{{ grakn_engine_version }}"
-grakn_engine_archive_format: "tar.gz"
-grakn_engine_package: "{{ grakn_engine_dist }}.{{ grakn_engine_archive_format }}"
+grakn_version: "0.0.1"
+grakn_dist: "grakn-kbms-dist-{{ grakn_version }}-SNAPSHOT"
+grakn_archive_format: "tar.gz"
+grakn_package: "{{ grakn_dist }}.{{ grakn_archive_format }}"
 
 redeploy: false
-upload_release: false
-grakn_engine_package_directory: "files/"
-grakn_download_url: "https://github.com/graknlabs/grakn/releases/download/v{{ grakn_engine_version }}/{{ grakn_engine_package }}"
+upload_release: True
+grakn_upload_directory: "files/"
+grakn_license: "license.grakn"
+grakn_decrypt: "decrypt.grakn"
+grakn_download_url: "https://github.com/graknlabs/grakn/releases/download/v{{ grakn_version }}/{{ grakn_package }}"
 
-grakn_engine_service_state: "started"
+cass_package: apache-cassandra-2.1.20-bin.tar.gz
+cass_download_url: "http://ftp.man.poznan.pl/apache/cassandra/2.1.20/{{ cass_package }}"
+
+grakn_service_state: "started"
+grakn_service_enabled: "yes"
 custom_logback: false
 
-cluster_home: /opt/grakn/cluster/
+cluster_home: /opt/
+db_home: /mnt/data1/
 log_home: /var/log/grakn/
 user_name: grakn
 group_name: grakn
 
 # Grakn properties
-grakn_knowledge_base_sharding_threshold: "100000"
-grakn_knowledge_base_ontology_cache_timeout_ms: "120000"
+grakn_knowledge_base_sharding_threshold: "10000"
+grakn_knowledge_base_schema_cache_timeout_ms: "600000"
 grakn_engine_taskmanager_implementation: "ai.grakn.engine.tasks.manager.singlequeue.SingleQueueTaskManager"
-grakn_tasks_postprocessing_delay: "60000"
-grakn_engine_loader_threads: "0"
-grakn_engine_log_dirs: "/var/log/grakn/cluster/engine/"
-grakn_engine_log_level: "INFO"
+grakn_tasks_postprocessing_delay: "1800"
+grakn_loader_threads: "4"
+grakn_webserver_threads: "64"
+grakn_background_tasks_threads: "1"
+grakn_log_level: "INFO"
 
 storage_hostname: localhost
-#storage_cassandra_replication_strategy_class: org.apache.cassandra.locator.SimpleStrategy
-#storage_cassandra_replication_strategy_options: "replication_factor,1"
-
+storage_num_tokens: 64
+storage_replication_factor: 3
 queue_host: "localhost:6379"
-
-kafka_hosts: ['localhost']
-zookeeper_hosts: ['localhost']
 
 grakn_analytics_spark_master: "local[*]"
 grakn_analytics_spark_executor_cores: "1"
@@ -42,8 +50,33 @@ grakn_analytics_spark_executor_memory: "1g"
 grakn_analytics_spark_cores_max: "6"
 
 # Grakn JVM settings
-grakn_engine_extra_options: "-Xmx12g -XX:+HeapDumpOnOutOfMemoryError"
+grakn_extra_options: "-Xmx12g -XX:+HeapDumpOnOutOfMemoryError"
 grakn_java_options: ""
 
 # Google Cloud Platform
 gcp_autoconfigure: false
+
+#ulimit configuration
+ulimit_config: 
+      - domain: "{{user_name}}"
+        type: '-'
+        item: memlock
+        value: unlimited
+      - domain: "{{user_name}}"
+        type: '-'
+        item: nofile
+        value: 100000
+      - domain: "{{user_name}}"
+        type: '-'
+        item: nproc
+        value: 32768
+      - domain: "{{user_name}}"
+        type: '-'
+        item: as
+        value: unlimited
+
+#Default limits.conf location
+ulimit_config_location: /etc/security/limits.conf
+
+# Enable Prometheus JMX exporter for metrics monitoring
+monitoring: True

@@ -1,21 +1,3 @@
-#
-# Grakn - A Distributed Semantic Database
-# Copyright (C) 2016  Grakn Labs Limited
-#
-# Grakn is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# Grakn is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Grakn. If not, see <http://www.gnu.org/licenses/gpl.txt>.
-#
-
 ############################# Knowledge Base Configuration #############################
 
 # Determines how Grakn is initialised. The possible options are:
@@ -50,6 +32,9 @@ knowledge-base.schema-cache-timeout-ms={{ grakn_knowledge_base_schema_cache_time
 
 ############################# Server Configuration #############################
 
+# Directory in which server data will be stored
+data-dir={{ db_home }}
+
 # Set the IP address that Grakn engine server will listen on.
 server.host=0.0.0.0
 # Port number to use for Grakn engine server to listen on. If provided port = 0
@@ -57,14 +42,6 @@ server.host=0.0.0.0
 server.port=4567
 # Set the external folder serving static files to the Grakn dashboard.
 server.static-file-dir=./services/assets/
-
-# Number of times to retry graph mutations if a temporary backend exception occurs
-# during the mutation. If this number is set to 0, the server will not retry.
-loader.repeat-commits=5
-
-# The delay in seconds between receiving a task and executing it.
-# This is to give time for any indices relating to the task to be finalised
-tasks.delay={{ grakn_tasks_postprocessing_delay }}
 
 # This defines the number of threads to be used when executing tasks. Consider
 # increasing this number to increase engine task throughput and CPU usage.
@@ -75,12 +52,27 @@ loader.threads={{ grakn_loader_threads }}
 # The max number of threads in Spark's thread pool
 webserver.threads={{ grakn_webserver_threads }}
 
+# How many threads to dedicate to background processes
+# This will determine how many background processes such as post processing can run concurrently
+background-tasks.threads={{ grakn_background_tasks_threads }}
+
+# How many threads are dedicated to post processing.
+# The more threads the faster consistency is achieved.
+# However too many threads and post processing can affect normal loading times.
+post-processor.pool-size=32
+
+# The amount of time to delay post processing this is to give time to finalise internal indices
+post-processor.delay=300
+
+# Port number to use for gRPC server to listen on
+grpc.port=48555
+
 ############################# Logging Configuration #############################
 # These properties are read directly by logback.xml
 
 # Single directory under which to store log files. If using a relative path it will be relative
 # to the JVM system variable "grakn.dir"
-log.dirs=./logs/
+log.dirs={{ log_home }}
 # Specify the log verbosity level. This can be one of:
 #
 # ERROR: (critical errors indicating the application has failed)
@@ -97,14 +89,26 @@ log.level={{ grakn_log_level}}
 storage.backend=grakn-production
 # The hostname or comma-separated list of hostnames of storage backend servers
 storage.hostname={{ storage_hostname }}
+storage.port=9160
+
 # Timeout in milliseconds when connecting to storage backend
-storage.connection-timeout=20000
+storage.connection-timeout=1800000
+storage.read-time=1800000
+storage.setup-wait=1800000
+storage.write-time=1800000
+
+# Super user credentials
+graknsystem.username=cassandra
+graknsystem.password=cassandra
+
+storage.cassandra.replication-factor= {{ storage_replication_factor }}
+storage.internal.num_tokens= {{ storage_num_tokens }}
 
 # Whether to enable the database-level cache, which is shared across all transactions.
 # Enabling this option speeds up traversals by holding hot elements in memory,
 # but also increases the likelihood of reading stale data. Disabling it forces each transaction
 # to independently fetch elements from storage before reading/writing them.
-cache.db-cache=true
+cache.db-cache=false
 # How long in milliseconds database-level cache will keep entries after flushing them.
 cache.db-cache-clean-wait=20
 # Default expiration time in milliseconds for entries in the database-level cache.
@@ -114,8 +118,23 @@ cache.db-cache-time=180000
 # Size of Janus's database cache in proportion to JVM size 0 (small) to 1 (large)
 cache.db-cache-size=0.25
 
-############################# Redis Configuration #############################
-# IP or hostname on which Redis is listening for connections.
-queue.host={{ queue_host }}
-queue.consumers=32
-redis.pool-size=32
+############################# KGMS License Configuration #############################
+# CQL driver port - this is different from storage.port in open source version because different drivers are used.
+kgms.storage.port=9042
+
+############################# KGMS License Configuration #############################
+kgms.license=./{{ grakn_license}}
+kgms.decrypt=./{{ grakn_decrypt}}
+
+############################# KGMS Encryption Configuration #############################
+kgms.encryption-secret=graknbmssecret
+
+############################# KGMS Clustering Configuration #############################
+
+# Cluster monitoring interval in seconds
+kgms.cluster.monitor-interval=1
+
+############################# KGMS TLS Configuration #############################
+kgms.grpc.encrypted=false
+kgms.server.private-key=./server.pem
+kgms.server.certificate=./server.crt
