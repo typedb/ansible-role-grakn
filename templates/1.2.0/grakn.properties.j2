@@ -108,7 +108,7 @@ storage.internal.num_tokens= {{ storage_num_tokens }}
 # Enabling this option speeds up traversals by holding hot elements in memory,
 # but also increases the likelihood of reading stale data. Disabling it forces each transaction
 # to independently fetch elements from storage before reading/writing them.
-cache.db-cache=true
+cache.db-cache=false
 # How long in milliseconds database-level cache will keep entries after flushing them.
 cache.db-cache-clean-wait=20
 # Default expiration time in milliseconds for entries in the database-level cache.
@@ -118,36 +118,23 @@ cache.db-cache-time=180000
 # Size of Janus's database cache in proportion to JVM size 0 (small) to 1 (large)
 cache.db-cache-size=0.25
 
-
-############################# Redis Configuration #############################
-# IP or hostname on which Redis is listening for connections.
-queue.host={{ queue_host }}
-redis.pool-size=32
-redis.sentinel.master=graknmaster
-redis.sentinel.host=
-
-############################# KBMS License Configuration #############################
+############################# KGMS License Configuration #############################
 # CQL driver port - this is different from storage.port in open source version because different drivers are used.
 kgms.storage.port=9042
 
-############################# KBMS License Configuration #############################
+############################# KGMS License Configuration #############################
 kgms.license=./{{ grakn_license}}
 kgms.decrypt=./{{ grakn_decrypt}}
 
-############################# KBMS Encryption Configuration #############################
+############################# KGMS Encryption Configuration #############################
 kgms.encryption-secret=graknbmssecret
 
-############################# KBMS Clustering Configuration #############################
+############################# KGMS Clustering Configuration #############################
 
 # Cluster monitoring interval in seconds
 kgms.cluster.monitor-interval=1
 
-############################# KBMS gRPC Configuration #############################
-
-# gRPC port for KBMS - this is because we currently start two grpc servers (until we will define how to merge them)
-kgms.grpc.port=2345
-
-############################# KBMS TLS Configuration #############################
+############################# KGMS TLS Configuration #############################
+kgms.grpc.encrypted=false
 kgms.server.private-key=./server.pem
 kgms.server.certificate=./server.crt
-kgms.client.trust-store=./trustedCert.crt

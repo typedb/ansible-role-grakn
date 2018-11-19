@@ -71,13 +71,26 @@
   copy:
     src: "{{ grakn_upload_directory }}/{{ grakn_license }}"
     dest: "{{ cluster_home }}/grakn/"
-  #when: grakn_dist | search("kbms")
+  when: grakn_dist | search("kgms")
 
 - name: Upload decrypt file
   copy:
     src: "{{ grakn_upload_directory }}/{{ grakn_decrypt }}"
     dest: "{{ cluster_home }}/grakn/"
-  #when: grakn_dist | search("kbms")
+  when: grakn_dist | search("kgms")
+
+- name: Download Cassandra
+  get_url:
+    url: "{{ cass_download_url }}"
+    dest: "{{ cluster_home }}"
+  when: grakn_dist | search("kgms")
+
+#- name: Unpack Cassandra
+#  unarchive:
+#    src: "{{ cluster_home }}{{ cass_package }}"
+#    dest: "{{ cluster_home }}"
+#    copy: no
+#  when: grakn_dist | search("kgms")
 
 - block:
   - name: Configure grakn.properties
@@ -157,3 +170,4 @@
      state: link
   with_items:
      - { path: 'graql', dest: 'graql' }
+     - { path: 'grakn', dest: 'grakn' }
