@@ -16,8 +16,8 @@ grakn_license: "license.grakn"
 grakn_decrypt: "decrypt.grakn"
 grakn_download_url: "https://github.com/graknlabs/grakn/releases/download/v{{ grakn_version }}/{{ grakn_package }}"
 
-cass_package: apache-cassandra-2.1.20-bin.tar.gz
-cass_download_url: "http://ftp.man.poznan.pl/apache/cassandra/2.1.20/{{ cass_package }}"
+cass_package: apache-cassandra-3.11.3-bin.tar.gz
+cass_download_url: "http://ftp.man.poznan.pl/apache/cassandra/3.11.3/{{ cass_package }}"
 
 grakn_service_state: "started"
 grakn_service_enabled: "yes"
