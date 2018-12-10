@@ -1,6 +1,0 @@
----
-- name: restart grakn
-  service:
-    name: grakn
-    state: restarted
-  when: grakn_service_state == "started"
