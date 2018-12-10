@@ -157,11 +157,11 @@
   with_items:
     - "{{cluster_home}}grakn/"
 
-- name: Start Grakn
-  service:
-    name: grakn
-    state: "{{ grakn_service_state }}"
-    enabled: "{{ grakn_service_enabled }}"
+#- name: Start Grakn
+#  service:
+#    name: grakn
+#    state: "{{ grakn_service_state }}"
+#    enabled: "{{ grakn_service_enabled }}"
 
 - name: Create symlinks
   file:
