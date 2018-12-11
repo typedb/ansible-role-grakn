@@ -85,13 +85,6 @@
     dest: "{{ cluster_home }}"
   when: grakn_dist | search("kgms")
 
-#- name: Unpack Cassandra
-#  unarchive:
-#    src: "{{ cluster_home }}{{ cass_package }}"
-#    dest: "{{ cluster_home }}"
-#    copy: no
-#  when: grakn_dist | search("kgms")
-
 - block:
   - name: Configure grakn.properties
     template:
@@ -102,7 +95,6 @@
     with_first_found:
       - "{{ grakn_version | regex_replace('-SNAPSHOT') }}/grakn.properties.j2"
       - "grakn.properties.j2"
-    notify: restart grakn
 
   - name: Configure logback.xml
     template:
@@ -116,7 +108,6 @@
         - "{{ grakn_version | regex_replace('-SNAPSHOT') }}/logback.xml.j2"
         skip: true
     when: custom_logback == true
-    notify: restart grakn
 
   - name: systemd service
     template:
@@ -125,7 +116,6 @@
       owner: "{{user_name}}"
       group: "{{group_name}}"
     register: systemd_grakn_config
-    notify: restart grakn
     with_first_found:
       - "{{ grakn_version }}/grakn.service.j2"
       - "grakn.service.j2"
@@ -136,7 +126,6 @@
       dest: /etc/default/grakn
       owner: "{{user_name}}"
       group: "{{group_name}}"
-    notify: restart grakn
     with_first_found:
       - "{{ grakn_version }}/default-grakn-environmentfile"
       - "default-grakn-environmentfile"
